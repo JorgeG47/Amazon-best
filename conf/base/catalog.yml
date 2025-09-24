@@ -1,0 +1,34 @@
+# Este es el nombre que usaremos para referirnos a este conjunto de datos en el código.
+raw_amazon_reviews:
+  # Tipo de DataSet: Usamos el de pandas para CSV, que también sirve para TSV.
+  type: kedro_datasets.pandas.ParquetDataSet
+  # Ruta absoluta al archivo.
+  filepath: C:\Users\jgtot\Desktop\ML proyecto\amazon-best\data\01_raw\amazon_reviews_us_Gift_Card_v1_00.tsv
+  # Argumentos para la carga de datos con pandas.
+  load_args:
+    # Especificamos que el separador es un tabulador.
+    sep: '\t'
+
+x_train:
+  type: kedro_datasets.pandas.ParquetDataSet
+  filepath: data/05_model_input/x_train.parquet
+
+x_test:
+  type: kedro_datasets.pandas.ParquetDataSet
+  filepath: data/05_model_input/x_test.parquet
+
+y_train:
+  type: kedro_datasets.pandas.ParquetDataSet
+  filepath: data/05_model_input/y_train.parquet
+
+y_test:
+  type: kedro_datasets.pandas.ParquetDataSet
+  filepath: data/05_model_input/y_test.parquet
+
+trained_model:
+  type: kedro_datasets.pickle.PickleDataSet
+  filepath: data/06_model_output/model.pkl
+
+metrics:
+  type: pandas.JSONDataSet
+  filepath: data/06_model_output/metrics.json
