@@ -1,5 +1,4 @@
-def generate_report(metrics, trained_model):
-    import json
-    print("📊 Métricas del modelo:")
-    print(json.dumps(metrics, indent=2))
-    print("✅ Modelo entrenado disponible para exportación o visualización.")
+"""
+This is a boilerplate pipeline 'reporting'
+generated using Kedro 1.0.0
+"""

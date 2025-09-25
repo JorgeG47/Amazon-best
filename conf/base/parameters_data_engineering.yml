@@ -1,0 +1,11 @@
+# This is a boilerplate parameters config generated for pipeline 'data_engeenering'
+# using Kedro 1.0.0.
+#
+# Documentation for this file format can be found in "Parameters"
+# Link: https://docs.kedro.org/en/1.0.0/configuration/parameters.html
+
+# conf/base/parameters/data_engineering.yml
+
+# Parámetros para la creación de la característica 'rango_precio'
+price_range_bins: [0, 10, 25, 50, 100, 200, 500, 1000, .inf]
+price_range_labels: ['0-10', '10-25', '25-50', '50-100', '100-200', '200-500', '500-1000', '1000+']

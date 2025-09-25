@@ -1,12 +1,11 @@
-from kedro.pipeline import Pipeline, node
-from .nodes import generate_report  # Asegúrate de que esta función exista en nodes.py
+"""
+This is a boilerplate pipeline 'reporting'
+generated using Kedro 1.0.0
+"""
 
-def create_pipeline():
-    return Pipeline([
-        node(
-            func=generate_report,
-            inputs=["metrics", "trained_model"],  # Ajusta según tus datasets
-            outputs=None,  # Si solo imprime o guarda internamente
-            name="generate_report_node"
-        )
-    ])
+# src/amazon_best/pipelines/reporting/pipeline.py
+
+from kedro.pipeline import pipeline
+
+def create_pipeline(**kwargs):
+    return pipeline([])

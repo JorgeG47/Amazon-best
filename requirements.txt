@@ -1,5 +1,4 @@
-kedro
-kedro-datasets
-pandas
-scikit-learn
 pyarrow
+kedro==0.19.5
+kedro-datasets[pandas, pickle, json]==2.1.0
+scikit-learn==1.3.2

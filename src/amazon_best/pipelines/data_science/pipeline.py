@@ -1,9 +1,39 @@
-from kedro.pipeline import Pipeline, node
-from .nodes import prepare_features, train_model, evaluate_model
+"""
+This is a boilerplate pipeline 'data_science'
+generated using Kedro 1.0.0
+"""
 
-def create_pipeline():
-    return Pipeline([
-        node(prepare_features, inputs="df_merged", outputs=["X_train", "X_test", "y_train", "y_test"], name="prepare_features_node"),
-        node(train_model, inputs=["X_train", "y_train"], outputs="trained_model", name="train_model_node"),
-        node(evaluate_model, inputs=["trained_model", "X_test", "y_test"], outputs="metrics", name="evaluate_model_node")
-    ])
+# src/amazon_best/pipelines/data_science/pipeline.py
+
+from kedro.pipeline import Pipeline, node, pipeline
+from .nodes import dividir_datos, entrenar_modelo, evaluar_modelo, generar_predicciones
+
+def create_pipeline(**kwargs) -> Pipeline:
+    return pipeline(
+        [
+            node(
+                func=dividir_datos,
+                inputs=["preprocessed_data", "params:data_science"], # Carga parámetros de data_science.yml
+                outputs=["X_train", "X_test", "y_train", "y_test"],
+                name="dividir_datos_node",
+            ),
+            node(
+                func=entrenar_modelo,
+                inputs=["X_train", "y_train"],
+                outputs="model",
+                name="entrenar_modelo_node",
+            ),
+            node(
+                func=evaluar_modelo,
+                inputs=["model", "X_test", "y_test"],
+                outputs="metrics",
+                name="evaluar_modelo_node",
+            ),
+            node(
+                func=generar_predicciones,
+                inputs=["model", "X_test", "y_test"],
+                outputs="predictions",
+                name="generar_predicciones_node",
+            ),
+        ]
+    )

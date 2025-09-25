@@ -1,12 +1,25 @@
-from kedro.pipeline import Pipeline
-from amazon_best.pipelines.data_engineering import pipeline as de_pipeline
-from amazon_best.pipelines.data_science import pipeline as ds_pipeline
-from amazon_best.pipelines.reporting import pipeline as rpt_pipeline  # si lo usas
+# src/amazon_best/pipeline_registry.py
 
-def register_pipelines() -> dict[str, Pipeline]:
+from kedro.pipeline import Pipeline
+from typing import Dict
+
+from amazon_best.pipelines import data_engineering as de
+from amazon_best.pipelines import data_science as ds
+from amazon_best.pipelines import reporting as rp
+
+def register_pipelines() -> Dict[str, Pipeline]:
+    """Register the project's pipelines.
+
+    Returns:
+        A mapping from pipeline names to ``Pipeline`` objects.
+    """
+    data_engineering_pipeline = de.create_pipeline()
+    data_science_pipeline = ds.create_pipeline()
+    reporting_pipeline = rp.create_pipeline()
+
     return {
-        "data_engineering": de_pipeline.create_pipeline(),
-        "data_science": ds_pipeline.create_pipeline(),
-        "reporting": rpt_pipeline.create_pipeline(),  # opcional
-        "__default__": de_pipeline.create_pipeline() + ds_pipeline.create_pipeline()
+        "de": data_engineering_pipeline,
+        "ds": data_science_pipeline,
+        "rp": reporting_pipeline,
+        "__default__": data_engineering_pipeline + data_science_pipeline + reporting_pipeline,
     }
