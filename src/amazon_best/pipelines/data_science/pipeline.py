@@ -13,7 +13,7 @@ def create_pipeline(**kwargs) -> Pipeline:
         [
             node(
                 func=dividir_datos,
-                inputs=["preprocessed_data", "params:data_science"], # Carga parámetros de data_science.yml
+                inputs=["preprocessed_data", "parameters"], # Carga parámetros desde 'parameters' (Kedro 1.0)
                 outputs=["X_train", "X_test", "y_train", "y_test"],
                 name="dividir_datos_node",
             ),

@@ -15,7 +15,7 @@ amazon-best = "amazon_best.__main__:main"
 [tool.kedro]
 package_name = "amazon_best"
 project_name = "Amazon_best"
-kedro_init_version = "0.19.5"
+kedro_init_version = "1.0.0"
 tools = "['Data Structure']"
 example_pipeline = "False"
 source_dir = "src"

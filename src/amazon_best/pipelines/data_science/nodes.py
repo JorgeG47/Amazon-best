@@ -13,12 +13,24 @@ import logging
 
 def dividir_datos(data: pd.DataFrame, parameters: Dict[str, Any]) -> Tuple:
     """Divide los datos en conjuntos de entrenamiento y prueba."""
-    X = data[parameters["features"]]
-    y = data[parameters["target"]]
-    
+    params = parameters.get('data_science', parameters)
+    X = data[params["features"]]
+    y = data[params["target"]]
+
     X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=parameters["test_size"], random_state=parameters["random_state"], stratify=y
+        X,
+        y,
+        test_size=params.get("test_size", 0.2),
+        random_state=params.get("random_state", 42),
+        stratify=y if len(y.unique()) > 1 else None,
     )
+
+    # Ensure y_train and y_test are DataFrames so they can be saved by ParquetDataset
+    if isinstance(y_train, pd.Series):
+        y_train = y_train.to_frame()
+    if isinstance(y_test, pd.Series):
+        y_test = y_test.to_frame()
+
     return X_train, X_test, y_train, y_test
 
 def entrenar_modelo(X_train: pd.DataFrame, y_train: pd.Series) -> RandomForestClassifier:

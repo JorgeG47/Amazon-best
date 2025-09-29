@@ -3,19 +3,5 @@
 #
 # Documentation for this file format can be found in "Parameters"
 # Link: https://docs.kedro.org/en/1.0.0/configuration/parameters.html
-# conf/base/parameters/data_science.yml
-
-# Parámetros para la división de datos
-test_size: 0.2
-random_state: 42
-
-# Lista de características que usará el modelo
-features:
-  - 'price'
-  - 'discounted_price'
-  - 'rating'
-  - 'rating_count'
-  - 'discount_percentage'
-
-# La variable objetivo que queremos predecir
-target: 'rango_precio'
+ # This file has been deprecated in favor of the namespaced parameters files.
+ # See conf/base/parameters/data_science.yml

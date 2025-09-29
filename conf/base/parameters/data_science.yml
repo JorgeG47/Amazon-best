@@ -1,0 +1,14 @@
+# Parmetros para data_science
+test_size: 0.2
+random_state: 42
+
+# Lista de caractersticas que usar el modelo
+features:
+  - 'price'
+  - 'discounted_price'
+  - 'rating'
+  - 'rating_count'
+  - 'discount_percentage'
+
+# La variable objetivo que queremos predecir
+target: 'rango_precio'

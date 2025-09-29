@@ -21,7 +21,7 @@ def unir_y_crear_caracteristicas(
     products: pd.DataFrame,
     categories: pd.DataFrame,
     extra_products: pd.DataFrame,
-    params: Dict[str, Any]
+    parameters: Dict[str, Any]
 ) -> pd.DataFrame:
     """
     Une todos los dataframes y crea las características finales, incluida la variable objetivo.
@@ -38,7 +38,22 @@ def unir_y_crear_caracteristicas(
 
     # 3. Realizar las uniones (merge)
     df_merged = pd.merge(amazon_clean, extra_products_clean, on='product_id', how='left')
-    df_merged = pd.merge(df_merged, categories_clean, on='category_id', how='left')
+
+    # Intentar unir con la tabla de categorías de forma robusta:
+    # - Preferir join por 'category_id' si existe en ambos DataFrames
+    # - Si no, intentar unir por 'category' (en amazon) ↔ 'category_name' (en categories)
+    if 'category_id' in df_merged.columns and 'category_id' in categories_clean.columns:
+        df_merged = pd.merge(df_merged, categories_clean, on='category_id', how='left')
+    elif 'category' in df_merged.columns and 'category_name' in categories_clean.columns:
+        df_merged = pd.merge(
+            df_merged,
+            categories_clean,
+            left_on='category',
+            right_on='category_name',
+            how='left',
+        )
+    else:
+        print("⚠️ No se encontró clave para unir categorías ('category_id' ni 'category'/'category_name'). Se omite la unión de categorías.")
     
     # 4. Ingeniería de Características (Feature Engineering)
     print("🛠️  Creando nuevas características...")
@@ -48,6 +63,9 @@ def unir_y_crear_caracteristicas(
         df_merged[col] = pd.to_numeric(df_merged[col], errors='coerce').fillna(0)
     df_merged['rating'] = pd.to_numeric(df_merged['rating_x'], errors='coerce').fillna(0)
     
+    # Compatibilidad: los parámetros pueden venir namespaced (data_engineering)
+    params = parameters.get('data_engineering', parameters)
+
     # Crear la variable objetivo: 'rango_precio' usando los parámetros
     df_merged['rango_precio'] = pd.cut(
         df_merged['discounted_price'],

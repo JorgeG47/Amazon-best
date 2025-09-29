@@ -1,50 +1,50 @@
 # conf/base/catalog.yml
 
 raw_amazon:
-  type: pandas.CSVDataSet
+  type: pandas.CSVDataset
   filepath: data/01_raw/amazon.csv
 
 raw_amazon_products:
-  type: pandas.CSVDataSet
+  type: pandas.CSVDataset
   filepath: data/01_raw/amazon_products.csv
 
 raw_amazon_categories:
-  type: pandas.CSVDataSet
+  type: pandas.CSVDataset
   filepath: data/01_raw/amazon_categories.csv
 
 raw_extra_products:
-  type: pandas.CSVDataSet
+  type: pandas.CSVDataset
   filepath: data/01_raw/products.csv
 
 preprocessed_data:
-  type: pandas.ParquetDataSet
+  type: pandas.ParquetDataset
   filepath: data/02_intermediate/preprocessed_data.pq
 
 X_train:
-  type: pandas.ParquetDataSet
+  type: pandas.ParquetDataset
   filepath: data/04_feature/X_train.pq
 
 X_test:
-  type: pandas.ParquetDataSet
+  type: pandas.ParquetDataset
   filepath: data/04_feature/X_test.pq
 
 y_train:
-  type: pandas.ParquetDataSet
+  type: pandas.ParquetDataset
   filepath: data/04_feature/y_train.pq
 
 y_test:
-  type: pandas.ParquetDataSet
+  type: pandas.ParquetDataset
   filepath: data/04_feature/y_test.pq
 
 model:
-  type: pickle.PickleDataSet
+  type: pickle.PickleDataset
   filepath: data/06_models/clasificador_rango_precio.pkl
-  layer: models
+  # 'layer' was removed to be compatible with current kedro-datasets constructors
 
 metrics:
-  type: json.JSONDataSet
+  type: json.JSONDataset
   filepath: data/08_reporting/metrics.json
 
 predictions:
-  type: pandas.CSVDataSet
+  type: pandas.CSVDataset
   filepath: data/07_model_output/predictions.csv

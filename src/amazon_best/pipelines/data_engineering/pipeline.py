@@ -18,7 +18,7 @@ def create_pipeline(**kwargs) -> Pipeline:
                     "raw_amazon_products",
                     "raw_amazon_categories",
                     "raw_extra_products",
-                    "params:data_engineering", # Carga los parámetros de data_engineering.yml
+                    "parameters", # use global parameters mapping (Kedro 1.0)
                 ],
                 outputs="preprocessed_data",
                 name="nodo_preprocesamiento_completo",
